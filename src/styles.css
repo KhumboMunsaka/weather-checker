@@ -1,0 +1,82 @@
+/* Updated CSS for side-by-side layout */
+.weather-info {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.weather-row {
+  display: contents;
+}
+
+.time-container,
+.temperature-container {
+  display: contents;
+}
+
+.time-container h2,
+.temperature-container h2 {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #2c3e50;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 0 0 1rem 0;
+}
+
+.time,
+.temperature {
+  padding: 0.8rem;
+  margin: 0.3rem 0;
+  background-color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.time {
+  grid-column: 1;
+  color: #7f8c8d;
+}
+
+.temperature {
+  grid-column: 2;
+  color: #e81818;
+  font-weight: 500;
+}
+
+/* Add alternating row colors */
+.weather-info > p:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .weather-info {
+    grid-template-columns: 1fr;
+  }
+
+  .time,
+  .temperature {
+    grid-column: 1;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .time::before {
+    content: "Time: ";
+    font-weight: bold;
+  }
+
+  .temperature::before {
+    content: "Temp: ";
+    font-weight: bold;
+  }
+}
