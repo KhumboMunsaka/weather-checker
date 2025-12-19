@@ -132,6 +132,8 @@ body {
 }
 
 .forecast-card {
+  display: flex;
+  flex-direction: column;
   background: var(--glass-bg);
   backdrop-filter: blur(5px);
   border: 1px solid var(--glass-border);
@@ -142,7 +144,9 @@ body {
 }
 
 .forecast-card:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .f-time {
@@ -155,6 +159,26 @@ body {
 .f-temp {
   font-size: 1.2rem;
   font-weight: 600;
+}
+.precip-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.precip-icon {
+  width: 9px;
+  height: 9px;
+  color: #74b9ff;
+  filter: drop-shadow(0 0 2px rgba(116, 185, 255, 0.5));
+}
+
+.precip-text {
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 /* Loaders & Errors */

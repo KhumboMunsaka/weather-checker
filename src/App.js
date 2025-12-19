@@ -31,6 +31,8 @@ function reducer(state, action) {
         weatherToday: action.payload?.hourly?.time?.slice(0, 24) || [],
         temperatureToday:
           action.payload?.hourly?.temperature_2m?.slice(0, 24) || [],
+        probabilityToday:
+          action.payload?.hourly?.precipitation_probability?.slice(0, 24) || [],
       };
     case "fetchedCity":
       return {
@@ -70,6 +72,7 @@ export default function App() {
       lng,
       weatherToday,
       temperatureToday,
+      probabilityToday,
       city,
       country,
       isLoading,
@@ -85,10 +88,12 @@ export default function App() {
       dispatch({ type: "loading" });
       try {
         const res = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=temperature_2m`
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=temperature_2m,precipitation_probability`
         );
         if (!res.ok) throw new Error("Failed to fetch weather data");
         const data = await res.json();
+        console.log(data);
+
         dispatch({ type: "fetchedWeatherDetails", payload: data });
       } catch (err) {
         dispatch({ type: "error", payload: err.message });
@@ -107,6 +112,7 @@ export default function App() {
         );
         if (!res.ok) throw new Error("Failed to fetch location name");
         const data = await res.json();
+
         dispatch({ type: "fetchedCity", payload: data });
       } catch (err) {
         // Non-critical, just log
@@ -210,6 +216,19 @@ export default function App() {
                 {weatherToday.map((time, index) => (
                   <div key={index} className="forecast-card">
                     <span className="f-time">{formatTime(time)}</span>
+                    <div className="precip-container">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="precip-icon"
+                      >
+                        <path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z" />
+                      </svg>
+                      <span className="precip-text">
+                        {probabilityToday[index]}%
+                      </span>
+                    </div>
                     <span className="f-temp">{temperatureToday[index]}°</span>
                   </div>
                 ))}
